@@ -17,7 +17,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.wefit_teste.common.AppColors
-import com.example.wefit_teste.data.model.Movie
+import com.example.wefit_teste.common.Spacings
+import com.example.wefit_teste.infra.model.Movie
 import com.example.wefit_teste.presentation.home.viewmodel.CartItemData
 import com.example.wefit_teste.utils.FormatUtils
 
@@ -32,9 +33,9 @@ fun CartItemCard(
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = AppColors.White),
-        shape = RoundedCornerShape(12.dp)
+        shape = RoundedCornerShape(Spacings.spacing(12))
     ) {
-        Column(modifier = Modifier.padding(12.dp)) {
+        Column(modifier = Modifier.padding(Spacings.spacing(12))) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Image(
                     painter = rememberAsyncImagePainter(movie.image),
@@ -42,7 +43,7 @@ fun CartItemCard(
                     modifier = Modifier.size(80.dp),
                     contentScale = ContentScale.Fit
                 )
-                Spacer(modifier = Modifier.width(12.dp))
+                Spacer(modifier = Modifier.width(Spacings.spacing(12)))
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
                         text = movie.title,
@@ -50,7 +51,7 @@ fun CartItemCard(
                         color = AppColors.Black,
                         maxLines = 1
                     )
-                    Spacer(modifier = Modifier.height(4.dp))
+                    Spacer(modifier = Modifier.height(Spacings.spacing(4)))
                     Text(
                         text = "Adicionado em ${cartItem.addedAt}",
                         style = MaterialTheme.typography.bodySmall,
@@ -66,7 +67,7 @@ fun CartItemCard(
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(Spacings.spacing(16)))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -81,17 +82,17 @@ fun CartItemCard(
                             tint = AppColors.PrimaryBlue
                         )
                     }
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(Spacings.spacing(8)))
                     Text(
                         text = cartItem.quantity.toString(),
                         style = MaterialTheme.typography.titleLarge.copy(
                             color = AppColors.Black,
                             fontWeight = FontWeight.Bold
                         ),
-                        modifier = Modifier.width(32.dp),
+                        modifier = Modifier.width(Spacings.spacing(32)),
                         textAlign = TextAlign.Center
                     )
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(Spacings.spacing(8)))
                     IconButton(onClick = onIncrease) {
                         Icon(
                             imageVector = Icons.Default.Add,

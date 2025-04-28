@@ -1,6 +1,6 @@
-package com.example.wefit_teste.data.repository
+package com.example.wefit_teste.infra.service
 
-import com.example.wefit_teste.data.model.MovieResponse
+import com.example.wefit_teste.infra.model.MovieResponse
 import retrofit2.Response
 import retrofit2.http.GET
 

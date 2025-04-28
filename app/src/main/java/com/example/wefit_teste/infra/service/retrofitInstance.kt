@@ -1,4 +1,4 @@
-package com.example.wefit_teste.data.repository
+package com.example.wefit_teste.infra.service
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

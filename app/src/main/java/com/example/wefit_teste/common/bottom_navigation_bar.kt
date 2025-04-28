@@ -13,17 +13,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.wefit_teste.common.AppColors
+import com.example.wefit_teste.common.Spacings
 
 @Composable
 fun BottomNavigationBar(selectedTab: Int, onTabSelected: (Int) -> Unit, cartItemCount: Int) {
     Surface(
         color = AppColors.BackgroundDark,
-        tonalElevation = 0.dp
+        tonalElevation = Spacings.spacing(0)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(64.dp)
+                .height(Spacings.spacing(64))
         ) {
             listOf(
                 Triple(Icons.Default.ShoppingCart, if (cartItemCount > 0) "Carrinho ($cartItemCount)" else "Carrinho", true),
@@ -60,9 +61,9 @@ fun BottomNavigationBar(selectedTab: Int, onTabSelected: (Int) -> Unit, cartItem
                                 selectedTab == index -> AppColors.White
                                 else -> AppColors.LightGray
                             },
-                            modifier = Modifier.size(20.dp)
+                            modifier = Modifier.size(Spacings.spacing(20))
                         )
-                        Spacer(modifier = Modifier.width(4.dp))
+                        Spacer(modifier = Modifier.width(Spacings.spacing(4)))
                         Text(
                             text = item.second,
                             color = when {

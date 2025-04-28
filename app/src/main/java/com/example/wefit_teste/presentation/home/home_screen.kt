@@ -23,7 +23,7 @@ fun HomeScreen() {
     val cartItems by viewModel.cartItems.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
 
-    var selectedTab by remember { mutableStateOf(1) }
+    var selectedTab by remember { mutableStateOf(HomeTab.Home) }
     var refreshing by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
@@ -42,15 +42,15 @@ fun HomeScreen() {
         },
         bottomBar = {
             BottomNavigationBar(
-                selectedTab = selectedTab,
-                onTabSelected = { selectedTab = it },
+                selectedTab = selectedTab.index,
+                onTabSelected = { selectedTab = HomeTab.fromIndex(it) },
                 cartItemCount = cartItems.values.sumOf { it.quantity }
             )
         },
         containerColor = AppColors.BackgroundDark
     ) { innerPadding ->
         when (selectedTab) {
-            0 -> {
+            HomeTab.Cart -> {
                 val cartMovies = movies.filter { cartItems[it.id] != null }
                     .map { movie -> movie to (cartItems[movie.id]!!) }
 
@@ -59,13 +59,13 @@ fun HomeScreen() {
                     onIncreaseQuantity = { movie -> viewModel.increaseQuantity(movie.id) },
                     onDecreaseQuantity = { movie -> viewModel.decreaseQuantity(movie.id) },
                     onRemoveItem = { movie -> viewModel.removeFromCart(movie.id) },
-                    onNavigateHome = { selectedTab = 1 },
+                    onNavigateHome = { selectedTab = HomeTab.Home },
                     onFinalizeOrder = { viewModel.clearCart() },
                     modifier = Modifier.padding(innerPadding)
                 )
             }
 
-            1 -> {
+            HomeTab.Home -> {
                 when {
                     isLoading && movies.isEmpty() -> {
                         Box(
@@ -112,7 +112,8 @@ fun HomeScreen() {
                 }
             }
 
-            else -> PlaceholderScreen(tabIndex = selectedTab, modifier = Modifier.padding(innerPadding))
+            HomeTab.Profile -> PlaceholderScreen(tabIndex = selectedTab.index, modifier = Modifier.padding(innerPadding))
         }
     }
 }
+

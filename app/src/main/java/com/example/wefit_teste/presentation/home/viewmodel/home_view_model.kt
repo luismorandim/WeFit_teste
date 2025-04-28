@@ -2,8 +2,8 @@ package com.example.wefit_teste.presentation.home.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.wefit_teste.data.model.Movie
-import com.example.wefit_teste.data.repository.MovieRepository
+import com.example.wefit_teste.infra.model.Movie
+import com.example.wefit_teste.infra.service.MovieRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

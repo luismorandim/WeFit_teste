@@ -12,6 +12,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.wefit_teste.R
 import com.example.wefit_teste.common.AppColors
+import com.example.wefit_teste.common.Spacings
 
 @Composable
 fun EmptyState(
@@ -21,11 +22,11 @@ fun EmptyState(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 24.dp),
+            .padding(horizontal = Spacings.spacing(24)),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(Spacings.spacing(16)))
 
         Text(
             text = "Parece que não há nada aqui :(",
@@ -33,7 +34,7 @@ fun EmptyState(
             style = MaterialTheme.typography.bodyLarge
         )
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(Spacings.spacing(12)))
 
         Image(
             painter = painterResource(id = R.drawable.ic_empty_state),
@@ -42,11 +43,11 @@ fun EmptyState(
             contentScale = ContentScale.Fit
         )
 
-        Spacer(modifier = Modifier.height(60.dp))
+        Spacer(modifier = Modifier.height(Spacings.spacing(60)))
 
         Button(
             onClick = onButtonClick,
-            shape = RoundedCornerShape(8.dp),
+            shape = RoundedCornerShape(Spacings.spacing(8)),
             colors = ButtonDefaults.buttonColors(
                 containerColor = AppColors.PrimaryBlue,
                 contentColor = AppColors.White

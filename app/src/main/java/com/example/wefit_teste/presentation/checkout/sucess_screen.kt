@@ -17,6 +17,7 @@ import com.example.wefit_teste.R
 import com.example.wefit_teste.common.AppColors
 import java.text.SimpleDateFormat
 import java.util.*
+import com.example.wefit_teste.common.Spacings
 
 @Composable
 fun SuccessScreen(
@@ -32,11 +33,11 @@ fun SuccessScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(AppColors.BackgroundDark)
-            .padding(16.dp),
+            .padding(Spacings.spacing(16)),
         contentAlignment = Alignment.Center
     ) {
         Card(
-            shape = RoundedCornerShape(12.dp),
+            shape = RoundedCornerShape(Spacings.spacing(12)),
             colors = CardDefaults.cardColors(containerColor = AppColors.White),
             modifier = Modifier
                 .fillMaxWidth()
@@ -44,7 +45,7 @@ fun SuccessScreen(
         ) {
             Column(
                 modifier = Modifier
-                    .padding(24.dp)
+                    .padding(Spacings.spacing(24))
                     .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -55,7 +56,7 @@ fun SuccessScreen(
                     )
                 )
 
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(Spacings.spacing(8)))
 
                 Text(
                     text = "Compra realizada com sucesso!",
@@ -66,7 +67,7 @@ fun SuccessScreen(
                     textAlign = TextAlign.Center
                 )
 
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(Spacings.spacing(24)))
 
                 Image(
                     painter = painterResource(id = R.drawable.success_purchase),
@@ -75,7 +76,7 @@ fun SuccessScreen(
                     modifier = Modifier.size(200.dp)
                 )
 
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(Spacings.spacing(24)))
 
                 Button(
                     onClick = onNavigateHome,
@@ -83,10 +84,10 @@ fun SuccessScreen(
                         containerColor = AppColors.PrimaryBlue,
                         contentColor = AppColors.White
                     ),
-                    shape = RoundedCornerShape(8.dp),
+                    shape = RoundedCornerShape(Spacings.spacing(8)),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(48.dp)
+                        .height(Spacings.spacing(48))
                 ) {
                     Text(text = "Voltar à Home")
                 }

@@ -1,6 +1,6 @@
-package com.example.wefit_teste.data.repository
+package com.example.wefit_teste.infra.service
 
-import com.example.wefit_teste.data.model.Movie
+import com.example.wefit_teste.infra.model.Movie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

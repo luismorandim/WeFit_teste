@@ -12,7 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.wefit_teste.common.AppColors
-import com.example.wefit_teste.data.model.Movie
+import com.example.wefit_teste.common.Spacings
+import com.example.wefit_teste.infra.model.Movie
 import com.example.wefit_teste.presentation.cart.components.CartItemCard
 import com.example.wefit_teste.presentation.components.EmptyState
 import com.example.wefit_teste.presentation.home.viewmodel.CartItemData
@@ -31,6 +32,7 @@ fun CartScreen(
     modifier: Modifier = Modifier
 ) {
     var showDialog by remember { mutableStateOf<Pair<Movie, CartItemData>?>(null) }
+    var moviePendingRemoval by remember { mutableStateOf<Movie?>(null) }
     var showSuccess by remember { mutableStateOf(false) }
 
     if (showSuccess) {
@@ -48,7 +50,7 @@ fun CartScreen(
             modifier = modifier
                 .fillMaxSize()
                 .background(AppColors.BackgroundDark)
-                .padding(16.dp)
+                .padding(Spacings.spacing(16))
         ) {
             Text(
                 text = "Carrinho de compras",
@@ -58,41 +60,60 @@ fun CartScreen(
                 )
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(Spacings.spacing(16)))
 
             Card(
-                shape = RoundedCornerShape(12.dp),
+                shape = RoundedCornerShape(Spacings.spacing(12)),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .wrapContentHeight(),
+                    .weight(1f),
                 colors = CardDefaults.cardColors(containerColor = AppColors.White)
             ) {
-                if (cartItems.isEmpty()) {
-                    EmptyState(
-                        buttonText = "Voltar à Home",
-                        onButtonClick = onNavigateHome
-                    )
-                } else {
-                    Column(modifier = Modifier.padding(16.dp)) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(Spacings.spacing(16))
+                ) {
+                    if (cartItems.isEmpty()) {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            EmptyState(
+                                buttonText = "Voltar à Home",
+                                onButtonClick = onNavigateHome
+                            )
+                        }
+                    } else {
                         LazyColumn(
-                            verticalArrangement = Arrangement.spacedBy(12.dp)
+                            verticalArrangement = Arrangement.spacedBy(Spacings.spacing(12)),
+                            modifier = Modifier.weight(1f)
                         ) {
                             items(cartItems) { (movie, cartItemData) ->
                                 CartItemCard(
                                     movie = movie,
                                     cartItem = cartItemData,
                                     onIncrease = { onIncreaseQuantity(movie) },
-                                    onDecrease = { onDecreaseQuantity(movie) },
+                                    onDecrease = {
+                                        if (cartItemData.quantity == 1) {
+                                            moviePendingRemoval = movie
+                                        } else {
+                                            onDecreaseQuantity(movie)
+                                        }
+                                    },
                                     onRemove = { showDialog = movie to cartItemData }
                                 )
                             }
                         }
 
+                        Spacer(modifier = Modifier.height(Spacings.spacing(16)))
+
                         Divider(
                             color = AppColors.LightGray,
-                            thickness = 1.dp,
-                            modifier = Modifier.padding(vertical = 16.dp)
+                            thickness = 1.dp
                         )
+
+                        Spacer(modifier = Modifier.height(Spacings.spacing(16)))
 
                         Row(
                             modifier = Modifier.fillMaxWidth(),
@@ -111,7 +132,7 @@ fun CartScreen(
                             )
                         }
 
-                        Spacer(modifier = Modifier.height(16.dp))
+                        Spacer(modifier = Modifier.height(Spacings.spacing(16)))
 
                         Button(
                             onClick = {
@@ -120,12 +141,12 @@ fun CartScreen(
                             },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(48.dp),
+                                .height(Spacings.spacing(48)),
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = AppColors.PrimaryBlue,
                                 contentColor = AppColors.White
                             ),
-                            shape = RoundedCornerShape(8.dp)
+                            shape = RoundedCornerShape(Spacings.spacing(8))
                         ) {
                             Text(text = "FINALIZAR PEDIDO")
                         }
@@ -135,19 +156,41 @@ fun CartScreen(
         }
     }
 
-    if (showDialog != null) {
+    RemoveItemDialog(
+        movie = showDialog?.first,
+        onDismiss = { showDialog = null },
+        onConfirm = {
+            onRemoveItem(showDialog!!.first)
+            showDialog = null
+        }
+    )
+
+    RemoveItemDialog(
+        movie = moviePendingRemoval,
+        onDismiss = { moviePendingRemoval = null },
+        onConfirm = {
+            onRemoveItem(moviePendingRemoval!!)
+            moviePendingRemoval = null
+        }
+    )
+}
+
+@Composable
+fun RemoveItemDialog(
+    movie: Movie?,
+    onDismiss: () -> Unit,
+    onConfirm: () -> Unit
+) {
+    if (movie != null) {
         AlertDialog(
-            onDismissRequest = { showDialog = null },
+            onDismissRequest = onDismiss,
             confirmButton = {
-                TextButton(onClick = {
-                    onRemoveItem(showDialog!!.first)
-                    showDialog = null
-                }) {
+                TextButton(onClick = onConfirm) {
                     Text("Sim", color = AppColors.SuccessGreen)
                 }
             },
             dismissButton = {
-                TextButton(onClick = { showDialog = null }) {
+                TextButton(onClick = onDismiss) {
                     Text("Cancelar")
                 }
             },

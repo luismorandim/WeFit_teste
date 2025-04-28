@@ -11,7 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.wefit_teste.common.AppColors
-import com.example.wefit_teste.data.model.Movie
+import com.example.wefit_teste.infra.model.Movie
+import com.example.wefit_teste.common.Spacings
 
 @Composable
 fun HomeContent(
@@ -24,9 +25,9 @@ fun HomeContent(
         modifier = modifier
             .fillMaxSize()
             .background(AppColors.BackgroundDark)
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = Spacings.spacing(16))
     ) {
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(Spacings.spacing(16)))
         Text(
             text = "Mais vendidos",
             style = MaterialTheme.typography.titleLarge.copy(
@@ -34,16 +35,16 @@ fun HomeContent(
             ),
             color = AppColors.White
         )
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(Spacings.spacing(4)))
         Text(
             text = "Maiores sucessos do WeMovies",
             style = MaterialTheme.typography.bodyLarge,
             color = AppColors.White,
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(bottom = Spacings.spacing(16))
         )
 
         LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(Spacings.spacing(16))
         ) {
             items(movies) { movie ->
                 val quantity = cartItems[movie.id] ?: 0
