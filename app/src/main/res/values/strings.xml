@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">WeMovies</string>
+    <string name="welcome">Bem vindo a</string>
+    <string name="empty_state_title">Parece que não há nada por aqui :(</string>
+    <string name="empty_state_img_desc">Mulher ao lado de ícone de recarregar</string>
+    <string name="retry">Recarregar página</string>
+</resources>
